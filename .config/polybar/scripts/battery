@@ -1,0 +1,66 @@
+#!/bin/sh
+
+battery=/sys/class/power_supply/BAT1
+
+discharging_icon() {
+  if [ "$1" -le 10 ]; then
+    echo "󰁺"
+  elif [ "$1" -le 20 ]; then
+    echo "󰁻"
+  elif [ "$1" -le 30 ]; then
+    echo "󰁼"
+  elif [ "$1" -le 40 ]; then
+    echo "󰁽"
+  elif [ "$1" -le 50 ]; then
+    echo "󰁾"
+  elif [ "$1" -le 60 ]; then
+    echo "󰁿"
+  elif [ "$1" -le 70 ]; then
+    echo "󰂀"
+  elif [ "$1" -le 80 ]; then
+    echo "󰂁"
+  elif [ "$1" -le 90 ]; then
+    echo "󰂂"
+  else
+    echo "󰁹"
+  fi
+}
+
+charging_icon() {
+  if [ "$1" -le 10 ]; then
+    echo "󰢜"
+  elif [ "$1" -le 20 ]; then
+    echo "󰂆"
+  elif [ "$1" -le 30 ]; then
+    echo "󰂇"
+  elif [ "$1" -le 40 ]; then
+    echo "󰂈"
+  elif [ "$1" -le 50 ]; then
+    echo "󰢝"
+  elif [ "$1" -le 60 ]; then
+    echo "󰂉"
+  elif [ "$1" -le 70 ]; then
+    echo "󰢞"
+  elif [ "$1" -le 80 ]; then
+    echo "󰂊"
+  elif [ "$1" -le 90 ]; then
+    echo "󰂋"
+  else
+    echo "󰂄"
+  fi
+}
+
+[ -d "$battery" ] || exit 1
+
+capacity="$(cat "$battery/capacity" 2>&1)"
+
+case "$(cat "$battery/status" 2>&1)" in
+	"Full") icon="󰂄";;
+  "Discharging") icon="$(discharging_icon $capacity)";;
+	"Charging") icon="$(charging_icon $capacity)";;
+	"Not charging") icon="󰂃";;
+	"Unknown") icon="󰂑";;
+	*) exit 1 ;;
+esac
+
+echo "$icon $capacity%"

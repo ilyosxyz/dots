@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# script to upload image to imgur.com; and copy link to it
+# 
+# NOTE: use your own Client-ID as IMGUR_CLIENT_ID
+
+ifinstalled --notify curl jq xclip || exit 1
+
+imgur_client_id="$(cat ~/.local/share/imgur_client_id)"
+
+jqr() {
+  jq --unbuffered --raw-output "$@"
+}
+
+json="$(curl -s  -H "Authorization: Client-ID $IMGUR_CLIENT_ID" -F "image=@$1" https://api.imgur.com/3/image)"
+status="$(echo "$json" | jqr .status)"
+
+if [ "$status" -ne 200 ]; then
+  notify-send "$(echo "$json" | jqr .data.error)"
+  exit 1
+fi
+
+link="$(echo "$json" | jqr .data.link)"
+echo -n "$link" | xclip -sel clip
+

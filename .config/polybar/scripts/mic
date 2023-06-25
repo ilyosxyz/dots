@@ -1,0 +1,5 @@
+#!/bin/sh
+
+vol="$(my_wpctl mic-get-vol)"
+
+[ -z "${vol#*muted*}" ] || [ "$vol" = "0%" ] && echo "" || echo ""

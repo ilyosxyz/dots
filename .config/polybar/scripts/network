@@ -1,0 +1,38 @@
+#!/bin/sh
+
+show_ssid=0
+sleep_pid=0
+
+toggle() {
+  show_ssid=$(( (show_ssid + 1) % 2 ))
+}
+
+status() {
+  # wifi
+  if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null; then
+    # wifi is connected
+    printf "$(awk '/^\s*w/ { print " ", int($3 * 100 / 70) "%% " }' /proc/net/wireless)"
+    [ $show_ssid -eq 1 ] && printf "$(iwgetid -r) "
+  elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null; then
+    # wifi is not connected
+    if grep -xq '0x1003' /sys/class/net/w*/flags; then
+      # no hotspot available
+      printf " "
+    else
+      # wifi disabled
+      printf " "
+    fi
+  fi
+  
+  # ethernet
+  printf "%s\n" "$(sed "s/down/ /;s/up/ /" /sys/class/net/e*/operstate 2>/dev/null)"
+}
+
+trap "toggle" USR1
+
+while true; do
+  status
+  sleep 5 &
+  sleep_pid=$!
+  wait
+done

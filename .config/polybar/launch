@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# terminate running polybars
+while pgrep -x polybar >/dev/null; do killall -q polybar; done
+
+# base path for script files
+export POLYBAR_SCRIPTS="$(dirname $0)/scripts"
+
+# launch main bar
+MAIN_POLYBAR="$(dual_head get_main)" && export MAIN_POLYBAR && polybar main &
+
+# launch extra bar if 2nd window is attached
+HDMI_POLYBAR="$(dual_head get_hdmi)" && export HDMI_POLYBAR && polybar extra &

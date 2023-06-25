@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# custom script to handle extra monitor to a laptop
+
+main_file=/tmp/main_monitor
+hdmi_file=/tmp/hdmi_monitor
+
+detect() {
+  echo "detect"
+  main="$(xrandr -q | grep " connected" | grep "DP")"
+  main="${main%% *}"
+  echo "$main" > $main_file
+
+  if hdmi="$(xrandr -q | grep " connected" | grep "HDMI")"; then
+    hdmi="${hdmi%% *}"
+    echo "$hdmi" > $hdmi_file
+
+    xrandr --output "$main" --mode 1920x1080 --primary --output "$hdmi" --mode 1920x1080 --left-of "$main"
+  else
+    rm $hdmi_file > /dev/null 2>&1
+    
+    xrandr --output "$main" --mode 1920x1080 --primary
+  fi
+  echo "after dual_head"
+}
+
+get_main() {
+  cat $main_file 2>/dev/null
+}
+
+get_hdmi() {
+  cat $hdmi_file 2>/dev/null
+}
+
+case "$1" in 
+  "get_main") get_main;;
+  "get_hdmi") get_hdmi;;
+  *) detect;;
+esac

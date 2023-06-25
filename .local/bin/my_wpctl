@@ -1,0 +1,77 @@
+#!/bin/sh
+
+# my wpctl wrapper to use in polybar and sxhkd
+
+ifinstalled wpctl || exit 1
+
+def_step=1
+speaker=@DEFAULT_AUDIO_SINK@
+mic=@DEFAULT_AUDIO_SOURCE@
+
+get_vol() {
+  vol="$(wpctl get-volume "$1")"
+
+  [ -z "${vol##*MUTE*}" ] && muted=" muted" || muted=""
+
+  vol="${vol#* }"
+  vol="${vol% *}"
+  vol="$(printf "%.0f%%" "${vol%.*}${vol#*.}")"
+
+  echo "$vol$muted"
+}
+
+get_vol_num() {
+  vol="$(wpctl get-volume "$1")"
+
+  vol="${vol#* }"
+  vol="${vol% *}"
+  vol="$(printf "%.0f" "${vol%.*}${vol#*.}")"
+
+  echo "$vol"
+}
+
+set_vol() {
+  [ -z "$2" ] && exit 1
+ 
+  [ "$2" -ge 0 ] && vol="$2" || vol="0"
+  
+  wpctl set-volume "$1" "$vol"%
+}
+
+mute() {
+  wpctl set-mute "$1" "${2:-toggle}"
+}
+
+inc() {
+  mute "$1" 0
+
+  cur="$(get_vol_num "$1")"
+  step="${2:-$def_step}"
+  next=$((cur + step))
+
+  set_vol "$1" $next
+}
+
+dec() {
+  cur="$(get_vol_num "$1")"
+  step="${2:-$def_step}"
+  next=$((cur - step))
+
+  set_vol "$1" $next
+}
+
+case "$1" in
+  #speakers or headsets
+  "mute")         mute $speaker "$2" ;;
+  "inc")          inc $speaker "$2" ;;
+  "dec")          dec $speaker "$2" ;;
+  "get-vol")      get_vol $speaker ;;
+  "set-vol")      set_vol $speaker "$2" ;;
+  
+  #microphone
+  "mic-mute")     mute "$mic" "$2" ;;
+  "mic-inc")      inc "$mic" "$2" ;;
+  "mic-dec")      dec "$mic" "$2" ;;
+  "mic-get-vol")  get_vol "$mic" ;;
+  "mic-set-vol")  set_vol "$mic" "$2" ;;
+esac

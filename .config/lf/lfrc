@@ -1,0 +1,52 @@
+# Basic Settings
+
+set hidden true
+set info size:time
+set drawbox true
+set ratios 1:3:2
+set number true
+set relativenumber true
+
+set ignorecase true
+set findlen 0
+
+# Custom Functions
+
+cmd newdir %{{
+  printf "Directory name: "
+  read ans
+  mkdir "$ans" && lf -remote "send $id select \"$ans\""
+}}
+
+cmd newfile %{{
+  printf "File name: "
+  read ans
+  touch "$ans" && lf -remote "send $id select \"$ans\""
+}}
+
+cmd syscopy ${{
+  if [ -f "$f" ]; then
+    cb cp "$f" >/dev/null 2>&1 && msg="copied ${f##*/}" || "something went wrong"
+  else
+    msg="only file can be copied"
+  fi
+  lf -remote "send $id echo $msg"
+}}
+
+cmd duplicate ${{
+  i=1
+  while [ -e "$f-$i" ]; do
+    i=$(($i+1))
+  done
+  cp -r "$f" "$f-$i"
+}}
+
+# Hot keys
+
+map . set hidden!
+map D delete
+map S calcdirsize
+map Y syscopy
+map <f-5> duplicate
+map <f-6> newfile
+map <f-7> newdir

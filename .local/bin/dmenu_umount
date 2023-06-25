@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# unmounts drives
+
+ifinstalled --notify dmenu || exit 1
+
+list="$(lsblk -lp | awk '/part/&&!/\/$|\/boot|SWAP|\/home\/[\w]\+$|part $/{print $7 " (" $1 "[" $4 "])"}')"
+
+if [ -z "$list" ]; then
+  notify-send "No drive to unmount"
+  exit 2
+fi
+
+drive="$(echo "$list" | dmenu -i -p "Which to unmount?")" || exit 3
+drive="${drive##*\(}"
+drive="${drive%%[*}"
+
+[ -z "$drive" ] && exit 4
+
+sudo umount -l "$drive" && notify-send "$drive unmounted"

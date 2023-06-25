@@ -1,0 +1,22 @@
+#!/bin/sh
+
+ifinstalled --notify xinput || exit 1
+
+prop="Device Enabled"
+
+id="$(xinput list | awk -sF "\t" '/Touchpad/ {print $2;exit}' | cut -d= -f2)"
+
+if [ -z "$id" ]; then
+  notify-send "Not found touchpad"
+  exit 1
+fi
+
+status="$(xinput list-props "$id" | awk -sF "\t" '/Device Enable/ {print $3}')"
+
+if [ "0" = "$status" ]; then
+  xinput enable "$id"
+  notify-send "Touchpad enabled"
+else
+  xinput disable "$id"
+  notify-send "Touchpad disabled"
+fi

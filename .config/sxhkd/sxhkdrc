@@ -1,0 +1,87 @@
+super + Return
+  $TERMINAL
+
+super + {d,D}
+  dmenu_{run,term}
+
+super + x
+  slock
+
+super + w
+  $BROWSER
+
+super + shift + w 
+  $BROWSER --incognito
+
+super + e
+  $TERMINAL -e lf
+
+# reload sxhkd configs
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# flameshot
+Print
+  flameshot gui
+
+# copyq
+super + v
+  copyq menu
+
+# mount/unmount drive
+super + {_,shift + }m
+  dmenu_{mount,umount}
+
+# speakers
+XF86Audio{Mute,LowerVolume,RaiseVolume}
+  my_wpctl {mute,dec,inc}
+
+# mic
+XF86AudioMicMute
+  my_wpctl mic-mute
+
+# playerctl
+control + shift + {braceleft,braceright,bar}
+  playerctl {previous,next,play-pause}
+
+### BSPWM ###
+
+# quit bspwm
+super + alt + q
+	bspc quit
+
+# close and kill
+super + {_,shift + }q
+	bspc node -{c,k}
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# focus the last desktop
+super + Tab
+	bspc desktop -f last
+
+# set the window state
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node stick
+super + ctrl + x
+	bspc node -g sticky
+
+# focus the node in the given direction
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
+
+# expand a window by moving one of its side outward
+super + alt + {Left,Down,Up,Right}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + alt + shift + {Left,Down,Up,Right}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move a floating window
+super + control + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}

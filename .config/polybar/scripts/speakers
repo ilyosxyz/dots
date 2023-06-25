@@ -1,0 +1,20 @@
+#!/bin/sh
+
+vol="$(my_wpctl get-vol)"
+
+if [ -z "${vol#*muted*}" ]; then 
+  echo " muted"
+  exit
+fi
+
+val="${vol%\%*}"
+
+if [ "$val" -le 30 ]; then 
+  icon=" "
+elif [ "$val" -le 70 ]; then
+  icon=" "
+else
+  icon=" "
+fi
+
+echo "$icon$vol"

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+status() {
+  if meta="$(playerctl metadata --format '{{lc(status)}} {{trunc(title,10)}} • {{trunc(artist,10)}}' 2>&1)"; then
+    case "${meta%% *}" in
+      playing) icon=" " ;;
+      paused)  icon=" "
+    esac
+    text="${meta#* }"
+  fi
+  echo "$icon $text"
+}
+
+notify() {
+  if meta="$(playerctl metadata --format '{{title}} • {{artist}}' 2>&1)"; then
+    notify-send "${meta%% • *}" "${meta##* • }"
+  fi
+}
+
+case "$1" in
+  notify) notify ;;
+  *)      status ;;
+esac

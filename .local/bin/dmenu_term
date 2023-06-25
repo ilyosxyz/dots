@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# like dmenu_run, but opens in terminal
+
+dmenu_path | dmenu "$@" | xargs $TERMINAL -e &

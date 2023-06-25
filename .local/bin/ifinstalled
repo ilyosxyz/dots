@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# simple script to check if package is installed for using in other scripts
+# 
+# use --notify to show notification
+
+error() {
+  if [ "$notify" -eq 1 ]; then
+    notify-send "$1" "must be installed"
+  fi
+  exit 1
+}
+
+if [ "$1" = "--notify" ]; then
+  notify=1;
+  shift;
+else
+  notify=0;
+fi
+
+for x in "$@"; do
+	if ! which "$x" >/dev/null 2>&1; then
+ 		error "$x"
+	fi
+done

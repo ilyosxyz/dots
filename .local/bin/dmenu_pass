@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# script to use as SUDO_ASKPASS variable,
+# meaning it'll be used as a password prompt if needed
+
+ifinstalled dmenu || exit 1
+
+dmenu -p "$1" -nf black -nb black <&-
