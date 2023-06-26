@@ -23,4 +23,4 @@ fi
 
 link="$(echo "$json" | jqr .data.link)"
 echo -n "$link" | xclip -sel clip
-
+notify-send "Image has been uploaded"
