@@ -12,7 +12,8 @@ jqr() {
   jq --unbuffered --raw-output "$@"
 }
 
-json="$(curl -s  -H "Authorization: Client-ID $IMGUR_CLIENT_ID" -F "image=@$1" https://api.imgur.com/3/image)"
+json="$(curl -s  -H "Authorization: Client-ID $imgur_client_id" -F "image=@$1" https://api.imgur.com/3/image)"
+
 status="$(echo "$json" | jqr .status)"
 
 if [ "$status" -ne 200 ]; then
