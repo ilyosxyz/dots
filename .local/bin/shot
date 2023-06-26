@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# little script to take screenshots using maim
+
+name="shot_$(date '+%y%m%d%H%M%S').png"
+
+o="$1"
+
+if [ -z "$o" ]; then
+  o="$(echo "copy\nsave\nupload" | dmenu)"
+fi
+
+case "$o" in
+  copy)   out="| xclip -sel clip -t image/png";;
+  save)   out="$HOME/$name";;
+  upload) out="/tmp/$name; imgur /tmp/$name; rm /tmp/$name";;
+  *)      echo "Invalid 1st arg"; exit 1;;
+esac
+
+p="$2"
+
+if [ -z "$p" ]; then
+  p="$(echo "full\nwindow\nselected" | dmenu)"
+fi
+
+case "$p" in
+  full)     param="-q -d 0.2";;
+  window)   param="-q -d 0.2 -i "$(xdotool getactivewindow)"";;
+  selected) param="-u -s";;
+  *)        echo "Invalid 2nd arg"; exit 2;;
+esac
+
+eval "maim $param $out"
