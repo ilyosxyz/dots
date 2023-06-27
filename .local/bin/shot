@@ -7,20 +7,20 @@ name="shot_$(date '+%y%m%d%H%M%S').png"
 o="$1"
 
 if [ -z "$o" ]; then
-  o="$(echo "copy\nsave\nupload" | dmenu)"
+  o="$(echo "copy\nsave\nupload" | dmenu)" || exit 1
 fi
 
 case "$o" in
   copy)   out="| xclip -sel clip -t image/png";;
   save)   out="$HOME/$name";;
-  upload) out="/tmp/$name; imgur /tmp/$name; rm /tmp/$name";;
+  upload) out="/tmp/$name && imgur /tmp/$name; rm /tmp/$name 2>/dev/null";;
   *)      echo "Invalid 1st arg"; exit 1;;
 esac
 
 p="$2"
 
 if [ -z "$p" ]; then
-  p="$(echo "full\nwindow\nselected" | dmenu)"
+  p="$(echo "full\nwindow\nselected" | dmenu)" || exit 2
 fi
 
 case "$p" in

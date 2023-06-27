@@ -21,9 +21,9 @@ super + Escape
 	pkill -USR1 -x sxhkd
 
 # screenshot
-{_,control +,alt +}Print
-  shot {copy,save,upload} selected
-shift + Print
+{_,control +,alt +}{_,shift+}Print
+  shot {copy,save,upload} {selected,window}
+super + Print
   shot
 
 # copyq
