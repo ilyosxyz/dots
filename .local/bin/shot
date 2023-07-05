@@ -13,7 +13,7 @@ fi
 case "$o" in
   copy)   out="| xclip -sel clip -t image/png";;
   save)   out="$HOME/$name";;
-  upload) out="/tmp/$name && imgur /tmp/$name; rm /tmp/$name 2>/dev/null";;
+  upload) out="| imgur";;
   *)      echo "Invalid 1st arg"; exit 1;;
 esac
 
