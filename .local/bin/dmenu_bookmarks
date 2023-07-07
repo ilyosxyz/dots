@@ -1,0 +1,30 @@
+#!/bin/sh
+
+file="$HOME/.local/share/bookmarks"
+
+paste(){
+  list="$(grep -v '^#' $file 2>/dev/null)"
+  
+  if [ -z "$list" ]; then
+    notify-send "No bookmarks" "Check $file"
+  else
+    xdotool type "$(grep -v -E '^#|^\s*$' $file | dmenu -i -l 10 | cut -d' ' -f1)"
+  fi
+}
+
+add() {
+  bookmark="$(xclip -o)"
+  
+  if grep -q "^$bookmark" "$file"; then
+    notify-send "Oops!" "Already bookmarked"
+  else
+    echo "$bookmark$1" >> "$file"
+    notify-send "Bookmarked!"
+  fi
+}
+
+if [ "$1" = "add" ]; then
+  add " $2"
+else
+  paste
+fi
