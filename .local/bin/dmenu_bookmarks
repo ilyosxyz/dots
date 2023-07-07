@@ -3,12 +3,16 @@
 file="$HOME/.local/share/bookmarks"
 
 menu(){
-  list="$(grep -v '^#' $file 2>/dev/null)"
+  list="$(grep -v '^#' "$file" 2>/dev/null)"
   
   if [ -z "$list" ]; then
     notify-send "No bookmarks" "Check $file"
   else
-    xdotool type "$(grep -v -E '^#|^\s*$' $file | dmenu -i -l 10 | cut -d' ' -f1)"
+    bookmark="$(grep -v -E '^#|^\s*$' "$file" | dmenu -i -l 10 | cut -d' ' -f1)"
+    
+    [ -z "$bookmark" ] && exit 1
+
+    xdotool type "$bookmark"
   fi
 }
 
@@ -24,7 +28,7 @@ add() {
 }
 
 edit() {
-  xdg-open $file
+  xdg-open "$file"
 }
 
 case "$1" in
