@@ -12,7 +12,7 @@ menu(){
     
     [ -z "$bookmark" ] && exit 1
 
-    xdotool type "$bookmark"
+    xdotool type --delay 0 "$bookmark"
   fi
 }
 
