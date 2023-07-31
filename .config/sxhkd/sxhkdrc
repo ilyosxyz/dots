@@ -47,8 +47,8 @@ control + shift + {braceleft,braceright,bar}
   playerctl {previous,next,play-pause}
 
 # bookmarks
-super + {_,shift +,control +, alt +} b
-  dmenu_bookmarks {_,add,add "todo",edit}
+super + {_,control +, alt +} b
+  dmenu_bookmarks {_,add,edit}
 
 ### BSPWM ###
 
