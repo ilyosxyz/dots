@@ -19,10 +19,10 @@ drive="${drive%% *}"
 mp="$(find /mnt /media /mount /home -maxdepth 1 -type d 2>/dev/null | dmenu -i -p "Mount this drive where?")" || exit 5
 if [ ! -d "$mp" ]; then
 	mdir=$(printf "Yes\nNo" | dmenu -i -p "$mp does not exist. Create it?") || exit 6
-	[ "$mdir" = "Yes" ] && (mkdir -p "$mp" || sudo mkdir -p "$mp")
+  [ "$mdir" = "Yes" ] && (mkdir -p "$mp" || sudo mkdir -p "$mp")
 fi
 
-if sudo mount --source "$drive" --target "$mp"; then
+if sudo mount --source "$drive" --target "$mp" && sudo chown -R "$(id -un):$(id -gn)" "$mp"; then
   notify-send "$drive" "mounted at $mp"
 else
   exit 7
