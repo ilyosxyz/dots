@@ -16,6 +16,8 @@ drive="${drive%% *}"
 
 [ -z "$drive" ] && exit 4
 
+sudo mount "$drive" && notify-send "$drive" "mounted according to fstab" && exit 0
+
 mp="$(find /mnt /media /mount /home -maxdepth 1 -type d 2>/dev/null | dmenu -i -p "Mount this drive where?")" || exit 5
 if [ ! -d "$mp" ]; then
 	mdir=$(printf "Yes\nNo" | dmenu -i -p "$mp does not exist. Create it?") || exit 6
