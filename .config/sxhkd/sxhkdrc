@@ -13,8 +13,8 @@ super + w
 super + shift + w 
   $BROWSER --incognito
 
-super + e
-  $TERMINAL -e lf
+super + {_,shift + }e
+  {$TERMINAL -e lf,pcmanfm}
 
 # reload sxhkd configs
 super + Escape
