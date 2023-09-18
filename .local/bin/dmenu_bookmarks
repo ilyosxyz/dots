@@ -2,22 +2,31 @@
 
 file="$HOME/.local/share/bookmarks"
 
-menu(){
+select_bm() {
   list="$(grep -v '^#' "$file" 2>/dev/null)"
   
   if [ -z "$list" ]; then
     notify-send "No bookmarks" "Check $file"
+    exit 1
   else
-    bookmark="$(grep -v -E '^#|^\s*$' "$file" | dmenu -i -l 10 | cut -d' ' -f1)"
-    
-    [ -z "$bookmark" ] && exit 1
-
-    xdotool type --delay 0 "$bookmark"
+    grep -v -E '^#|^\s*$' "$file" | dmenu -i -l 10
   fi
 }
 
-add() {
-  bookmark="$(xclip -o)"
+confirm_bm() {
+  read p < /dev/stdin
+  ans="$(printf "Yes\nNo" | dmenu -p "$1 $p?" -i)" || exit 2
+  [ -z "${ans%%*Yes*}" ] && echo "$p"
+}
+
+type_bm() {
+  bookmark="$(select_bm)" || exit 3
+
+  xdotool type --delay 0 "${bookmark%% *}"
+}
+
+add_bm() {
+  bookmark="$(xclip -o | confirm_bm Add)" || exit 4
   note="$(dmenu -p "note:" <&-)"
   
   if grep -q "^$bookmark" "$file"; then
@@ -32,12 +41,22 @@ add() {
   fi
 }
 
-edit() {
+delete_bm() {
+  bookmark="$(select_bm | confirm_bm Delete)" || exit 5
+  if grep -qF "$bookmark" "$file"; then
+    tmp="$(mktemp)"
+    grep -vF "$bookmark" "$file" > "$tmp"
+    cat "$tmp" > "$file"
+  fi
+}
+
+edit_bm() {
   xdg-open "$file"
 }
 
 case "$1" in
-  add)  add;;
-  edit) edit;;
-  *)    menu;;
+  add)    add_bm;;
+  edit)   edit_bm;;
+  delete) delete_bm;;
+  *)      type_bm;;
 esac
