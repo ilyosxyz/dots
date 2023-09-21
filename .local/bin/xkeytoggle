@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# toggle keyboard layout
+
+current="$(setxkbmap -query | awk '/layout/ {print $2}')"
+
+if [ "$current" = "us" ]; then
+  setxkbmap ru
+else
+  setxkbmap us
+fi
