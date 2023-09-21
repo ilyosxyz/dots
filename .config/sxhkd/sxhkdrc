@@ -50,6 +50,10 @@ control + shift + {braceleft,braceright,bar}
 super + {_,control +,shift +,alt +} b
   dmenu_bookmarks {_,add,delete,edit}
 
+# xkeytoggle
+super + space
+  xkeytoggle
+
 ### BSPWM ###
 
 # quit bspwm
