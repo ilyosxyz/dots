@@ -41,12 +41,35 @@ cmd duplicate ${{
   cp -r "$f" "$f-$i"
 }}
 
+cmd bulkrename ${{
+    tmpfile_old="$(mktemp)"
+    tmpfile_new="$(mktemp)"
+
+    # if any file is not selected, rename all files based on hidden status
+    [ -n "$fs" ] && fs="$(basename -a $fs)" || fs="$( [ "$lf_hidden" = true ] && ls -A || ls)"
+
+    echo "$fs" > "$tmpfile_old"
+    echo "$fs" > "$tmpfile_new"
+    $EDITOR "$tmpfile_new"
+
+    [ "$(wc -l < "$tmpfile_old")" -eq "$(wc -l < "$tmpfile_new")" ] || { rm -f "$tmpfile_old" "$tmpfile_new"; exit 1; }
+
+    paste "$tmpfile_old" "$tmpfile_new" | while IFS="$(printf '\t')" read -r src dst
+    do
+        [ "$src" = "$dst" ] || [ -e "$dst" ] || mv -- "$src" "$dst"
+    done
+
+    rm -f "$tmpfile_old" "$tmpfile_new"
+    lf -remote "send $id unselect"
+}}
+
 # Hot keys
 
 map . set hidden!
 map D delete
 map S calcdirsize
 map Y syscopy
+map R bulkrename
 map <f-5> duplicate
 map <f-6> newfile
 map <f-7> newdir
