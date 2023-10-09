@@ -5,7 +5,7 @@ super + {d,D}
   dmenu_{run,term}
 
 super + x
-  slock
+  slock -m "$(cowsay Enter password)"
 
 super + w
   $BROWSER
