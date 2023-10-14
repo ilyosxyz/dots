@@ -1,5 +1,4 @@
 #!/bin/sh
 
 # like dmenu_run, but opens in terminal
-
-dmenu_path | dmenu "$@" | xargs $TERMINAL -e &
+dmenu_path | dmenu "$@" | xargs -I "{}" $TERMINAL -e bash -c '{}; printf "\nPress any key"; read -n1'
