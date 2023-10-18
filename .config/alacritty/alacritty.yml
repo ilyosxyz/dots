@@ -15,18 +15,18 @@ scrolling:
 
 font:
   normal:
-    family: JetBrainsMono Nerd Font
-    style: Medium
+    family: Iosevka Fixed
+    style: Regular
 
   bold:
-    family: JetBrainsMono Nerd Font
+    family: Iosevka Fixed
     style: Bold
   italic:
-    family: JetBrainsMono Nerd Font
-    style: MediumItalic
+    family: Iosevka Fixed
+    style: Italic
   bold_italic:
-    family: JetBrainsMono Nerd Font
-    style: BoldItalic
+    family: Iosevka Fixed
+    style: Bold Italic
   size: 10.0
 
 import:
