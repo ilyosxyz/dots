@@ -24,7 +24,7 @@ if [ ! -d "$mp" ]; then
   [ "$mdir" = "Yes" ] && (mkdir -p "$mp" || sudo mkdir -p "$mp")
 fi
 
-if sudo mount --source "$drive" --target "$mp" && sudo chown -R "$(id -un):$(id -gn)" "$mp"; then
+if sudo mount --source "$drive" --target "$mp"; then
   notify-send "$drive" "mounted at $mp"
 else
   exit 7
