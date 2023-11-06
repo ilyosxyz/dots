@@ -29,7 +29,7 @@ status() {
   fi
   
   # ethernet
-  printf "%s\n" "$(sed "s/down/󰅛 /;s/up/󰱓/" /sys/class/net/e*/operstate 2>/dev/null | tr '\n' '\0')"
+  printf "%s\n" "$(sed "s/down/󰅛 /;s/up/󰱓/" /sys/class/net/e*/operstate 2>/dev/null | tr -d '\n')"
 }
 
 trap "toggle" USR1
