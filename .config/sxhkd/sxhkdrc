@@ -54,6 +54,10 @@ super + {_,control +,shift +,alt +} b
 super + space
   xkeytoggle
 
+# pass_menu
+super + {_,control + ,alt + }p
+  pass_menu {password,username,otp}
+
 ### BSPWM ###
 
 # quit bspwm

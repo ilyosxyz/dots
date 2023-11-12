@@ -1,11 +1,17 @@
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-# env vars
-export PATH=$PATH$(find ~/.local/bin -type d -printf :%p)
-export TERMINAL=alacritty
-export EDITOR=nvim
-export BROWSER=brave
-export SUDO_ASKPASS=~/.local/bin/dmenu_pass
+# add '~/.local/bin' an subfolder to path
+export PATH="$PATH$(find $HOME/.local/bin -type d -printf :%p)"
+
+# default apps
+export TERMINAL="alacritty"
+export EDITOR="nvim"
+export BROWSER="brave"
+
+# some program settings
+export SUDO_ASKPASS="$HOME/.local/bin/dmenu_pass"
+export PASSWORD_STORE_DIR="$HOME/.local/share/pass"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 
 # gpg ssh auth
 unset SSH_AGENT_PID

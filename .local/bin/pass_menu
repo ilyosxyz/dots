@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# pass wrapper script
+
+pass_type="xdotool type --delay 0 --clearmodifiers --file -"
+
+pass_select() {
+  prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}/"
+  find "$prefix" -name *.gpg | sed "s:$prefix::; s:.gpg::" | dmenu -p "$1"
+}
+
+type_username() {
+  selected="$(pass_select Username)"
+  [ -n "$selected" ] && printf "%s" "$(pass show "$selected" 2>/dev/null | sed -n 's/^username://p;')" | $pass_type
+}
+
+type_password() {
+  selected="$(pass_select Password)"
+  [ -n "$selected" ] && printf "%s" "$(pass show "$selected" 2>/dev/null | sed 1q)" | $pass_type
+}
+
+type_otp() {
+  selected="$(pass_select OTP)"
+  [ -n "$selected" ] && printf "%s" "$(pass otp code "$selected" 2>/dev/null)" | $pass_type
+}
+
+case "$1" in
+  username) type_username;;
+  otp)      type_otp;;
+  *)        type_password;;
+esac
