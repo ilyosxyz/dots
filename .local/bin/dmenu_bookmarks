@@ -23,7 +23,7 @@ confirm_bm() {
 type_bm() {
   bookmark="$(select_bm)" || exit 3
 
-  xdotool type --delay 0 "${bookmark%% *}"
+  xdotool type --clearmodifiers --delay 0 "${bookmark%% *}"
 }
 
 add_bm() {
