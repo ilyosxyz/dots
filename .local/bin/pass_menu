@@ -11,17 +11,17 @@ pass_select() {
 
 type_username() {
   selected="$(pass_select Username)"
-  [ -n "$selected" ] && printf "%s" "$(pass show "$selected" 2>/dev/null | sed -n 's/^username://p;')" | $pass_type
+  [ -n "$selected" ] && pass show "$selected" 2>/dev/null | sed -n 's/^username://p;' | tr -d '\n' | $pass_type
 }
 
 type_password() {
   selected="$(pass_select Password)"
-  [ -n "$selected" ] && printf "%s" "$(pass show "$selected" 2>/dev/null | sed 1q)" | $pass_type
+  [ -n "$selected" ] && pass show "$selected" 2>/dev/null | sed 1q | tr -d '\n' | $pass_type
 }
 
 type_otp() {
   selected="$(pass_select OTP)"
-  [ -n "$selected" ] && printf "%s" "$(pass otp code "$selected" 2>/dev/null)" | $pass_type
+  [ -n "$selected" ] && pass otp code "$selected" 2>/dev/null | tr -d '\n' | $pass_type
 }
 
 case "$1" in
