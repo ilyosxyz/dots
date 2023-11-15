@@ -6,7 +6,20 @@ pass_type="xdotool type --delay 0 --clearmodifiers --file -"
 
 pass_select() {
   prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}/"
-  find "$prefix" -name *.gpg | sed "s:$prefix::; s:.gpg::" | dmenu -p "$1"
+  find "$prefix" -name *.gpg | sed "s:$prefix::; s:.gpg::" | dmenu -i -p "$1"
+}
+
+type_url() {
+  selected="$(pass_select Url)"
+  if [ -n "$selected" ]; then
+    urls="$(pass show "$selected" 2>/dev/null | sed -n 's/^url://p;')"
+    if [ "$(echo "$urls" | wc -l)" = 1 ]; then
+      url="$urls"
+    else
+      url="$(echo "$urls" | dmenu -i -p Url)"
+    fi
+    echo "$url" | tr -d '\n' | $pass_type
+  fi
 }
 
 type_username() {
@@ -24,8 +37,16 @@ type_otp() {
   [ -n "$selected" ] && pass otp code "$selected" 2>/dev/null | tr -d '\n' | $pass_type
 }
 
+select_option() {
+  opt="$(printf "url\nusername\npassword\notp" | dmenu -p "Select option")"
+  [ -z "$opt" ] && exit 1
+  exec "$0" "$opt"
+}
+
 case "$1" in
+  url)      type_url;;
   username) type_username;;
   otp)      type_otp;;
-  *)        type_password;;
+  password) type_password;;
+  *)        select_option;;
 esac

@@ -55,8 +55,8 @@ super + space
   xkeytoggle
 
 # pass_menu
-super + {_,control + ,alt + }p
-  pass_menu {password,username,otp}
+super + {_,shift +,control +,alt +,control + alt +} p
+  pass_menu {_,url,username,password,otp}
 
 ### BSPWM ###
 
