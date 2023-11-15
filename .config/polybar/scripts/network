@@ -13,23 +13,23 @@ status() {
     # wifi is connected
     printf "$(awk '/^\s*w/ { print int($3 * 100 / 70) "%% " }' /proc/net/wireless)"
     [ $show_ssid -eq 1 ] && printf "$(iwgetid -r) "
-    printf "󰀂 "
+    printf "󰀂"
   elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null; then
     # wifi is not connected
     if grep -xq '0x1003' /sys/class/net/w*/flags; then
       # no hotspot available
-      printf "󰛵 "
+      printf "󰛵"
     else
       # wifi disabled
-      printf "󰯡 "
+      printf "󰯡"
     fi
   else
     # no wifi interface
-    printf "󰯡 "
+    printf "󰯡"
   fi
   
   # ethernet
-  printf "%s\n" "$(sed "s/down/󰅛 /;s/up/󰱓/" /sys/class/net/e*/operstate 2>/dev/null | tr -d '\n')"
+  printf "%s\n" "$(sed "s/down/󰅛/;s/up/󰱓/" /sys/class/net/e*/operstate 2>/dev/null | tr -d '\n')"
 }
 
 trap "toggle" USR1
