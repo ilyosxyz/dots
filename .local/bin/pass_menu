@@ -10,8 +10,12 @@ pass_select() {
   find "$prefix" -name *.gpg | sed "s:$prefix::; s:.gpg::" | dmenu -i -p "Select:"
 }
 
-select_option() {
-  printf "url\nusername\npassword\notp" | dmenu -i -p "Option:"
+pass_option() {
+  d="$(pass show "$1" 2>/dev/null)"
+
+  [ -z "$d" ] && exit 1
+
+  echo "$d" | sed -n "s/^url:.*/url/p; s/^username:.*/username/p; 1 s/.*/password/p; s/^otpauth:.*/otp/p;" | uniq | dmenu -i -p "$1"
 }
 
 type_url() {
@@ -44,7 +48,7 @@ fi
 
 [ -n "$p" ] && echo "$p" > "$tpl" || exit 1
 
-case "$(select_option)" in
+case "$(pass_option "$p")" in
   url)      type_url "$p";;
   username) type_username "$p";;
   password) type_password "$p";;
