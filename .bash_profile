@@ -12,6 +12,7 @@ export BROWSER="brave"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenu_pass"
 export PASSWORD_STORE_DIR="$HOME/.local/share/pass"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # gpg ssh auth
 unset SSH_AGENT_PID
