@@ -15,25 +15,15 @@ pass_option() {
 
   [ -z "$d" ] && exit 1
 
-  echo "$d" | sed -n "s/^url:.*/url/p; s/^username:.*/username/p; 1 s/.*/password/p; s/^otpauth:.*/otp/p;" | uniq | dmenu -i -p "$1"
-}
-
-type_url() {
-  urls="$(pass show "$1" 2>/dev/null | sed -n 's/^url://p;')"
-  if [ "$(echo "$urls" | wc -l)" = 1 ]; then
-    url="$urls"
-  else
-    url="$(echo "$urls" | dmenu -i -p "Select:")"
-  fi
-  echo "$url" | tr -d '\n' | $pass_type
-}
-
-type_username() {
-  pass show "$1" 2>/dev/null | sed -n 's/^username://p;' | tr -d '\n' | $pass_type
+  echo "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^otpauth:.*/otp/p;" | dmenu -i -p "$1"
 }
 
 type_password() {
   pass show "$1" 2>/dev/null | sed 1q | tr -d '\n' | $pass_type
+}
+
+type_username() {
+  pass show "$1" 2>/dev/null | sed -n 's/^username://p;' | tr -d '\n' | $pass_type
 }
 
 type_otp() {
@@ -49,8 +39,7 @@ fi
 [ -n "$p" ] && echo "$p" > "$tpl" || exit 1
 
 case "$(pass_option "$p")" in
-  url)      type_url "$p";;
-  username) type_username "$p";;
   password) type_password "$p";;
+  username) type_username "$p";;
   otp)      type_otp "$p";;
 esac
