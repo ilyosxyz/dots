@@ -2,8 +2,6 @@
 
 ifinstalled --notify xinput || exit 1
 
-prop="Device Enabled"
-
 id="$(xinput list | awk -sF "\t" '/Touchpad/ {print $2;exit}' | cut -d= -f2)"
 
 if [ -z "$id" ]; then

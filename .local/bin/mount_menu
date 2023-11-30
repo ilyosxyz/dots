@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# mounts drives
+
+ifinstalled --notify dmenu || exit 1
+
+if [ "$1" = mount ]; then
+  list="$(lsblk -lp | awk '/part $/ {print $1 " (" $4 ")"}')"
+
+  if [ -z "$list" ]; then
+    notify-send "Nothing to mount"
+    exit 2
+  fi
+
+  drive="$(lsblk -lp | awk '/part $/ {print $1 " (" $4 ")"}' | dmenu -i -p "Which to mount?")" || exit 3
+  drive="${drive%% *}"
+
+  [ -z "$drive" ] && exit 4
+
+  sudo mount "$drive" && notify-send "$drive" "mounted according to fstab" && exit 0
+
+  mp="$(find /mnt /media /mount /home -maxdepth 1 -type d 2>/dev/null | dmenu -i -p "Mount to where?")" || exit 5
+  if [ ! -d "$mp" ]; then
+    mdir=$(printf "Yes\nNo" | dmenu -i -p "$mp does not exist. Create it?") || exit 6
+    [ "$mdir" = "Yes" ] && (mkdir -p "$mp" || sudo mkdir -p "$mp")
+  fi
+
+  if sudo mount --source "$drive" --target "$mp"; then
+    notify-send "$drive" "mounted at $mp"
+  else
+    exit 7
+  fi
+elif [ "$1" = unmount ]; then
+  list="$(lsblk -lp | awk '/part/&&!/\/$|\/boot|SWAP|\/home\/[\w]\+$|part $/{print $7 " (" $1 "[" $4 "])"}')"
+
+  if [ -z "$list" ]; then
+    notify-send "Nothing to unmount"
+    exit 2
+  fi
+
+  drive="$(echo "$list" | dmenu -i -p "Which to unmount?")" || exit 3
+  drive="${drive##*\(}"
+  drive="${drive%%[*}"
+
+  [ -z "$drive" ] && exit 4
+
+  sudo umount -l "$drive" && notify-send "$drive unmounted"
+fi

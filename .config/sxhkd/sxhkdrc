@@ -32,7 +32,7 @@ super + v
 
 # mount/unmount drive
 super + {_,shift + }m
-  dmenu_{mount,umount}
+  mount_menu {mount,unmount}
 
 # speakers
 XF86Audio{Mute,LowerVolume,RaiseVolume}
@@ -48,7 +48,7 @@ control + shift + {braceleft,braceright,bar}
 
 # bookmarks
 super + {_,control +,shift +,alt +} b
-  dmenu_bookmarks {_,add,delete,edit}
+  bookmark_menu {_,add,delete,edit}
 
 # xkeytoggle
 super + space
