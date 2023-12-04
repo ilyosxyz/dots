@@ -5,6 +5,7 @@
 + bspwm
 + polybar (+ scripts)
 + sxhkd
++ xinit
 + alacritty
 + neovim
 + bash
@@ -15,7 +16,9 @@
 + neofetch
 + paru
 + zathura
-+ xinit
++ mpv
++ nsxiv
++ gpg
 
 ## Scripts
 
@@ -23,20 +26,19 @@ All scripts are in `.local/bin` directory
 
 | script           | usage                                                                             |
 |------------------|-----------------------------------------------------------------------------------|
-| dmenu_bookmarks* | paste/create/delete/manage bookmarks                                              |
-| dmenu_pass*      | to use for `SUDO_ASKPASS`                                                         |
-| dmenu_mount*     | mount drives interactively                                                        |
-| dmenu_umount*    | unmount drives interactively                                                      |
+| bookmark_menu    | paste/create/delete/manage bookmarks                                              |
+| dmenu_pass       | to use for `SUDO_ASKPASS`                                                         |
 | dmenu_term*      | dmenu_run for terminal apps                                                       |
 | dual_head        | to manage 2 monitors                                                              |
 | ifinstalled      | to check if package(s) is/are installed, used in other scripts                    |
 | imgur            | upload images to imgur from file/stdin/url                                        |
+| mount_menu       | mount/unmount drives interactively                                                |
 | my_wpctl         | wrapper for wireplumber's wpctl to manage speaker/headsets and mic                |
+| pass_menu        | menu for pass util (built-in passmenu alternative)                                |
 | set_bg           | load/change wallpaper                                                             |
-| shot**           | maim wrapper to copy/save/upload ** a capture of full screen/window/selected area |
+| shot             | maim wrapper to copy/save/upload ** a capture of full screen/window/selected area |
 | toggle_touchpad  | enable/disable laptops' touchpad                                                  |
 | torrent_add      | add torrents to transmission-daemon's list                                        |
 | xkeytoggle       | toggle keyboard's layout us/ru                                                    |
 
-<div>* uses dmenu</div>
-<div>** uses imgur script to upload</div>
+###### Feel free to contribute or report issues
