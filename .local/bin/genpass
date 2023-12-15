@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# toggle keyboard layout
+
+DEFAULT_LENGTH=25
+CHARACTER_SET="[:punct:][:alnum:]"
+CHARACTER_SET_NO_SYMBOLS="[:alnum:]"
+
+if [ "$1" = "-n" ]; then
+  characters="$CHARACTER_SET_NO_SYMBOLS"
+  shift
+else
+  characters="$CHARACTER_SET"
+fi
+
+length="${1:-$DEFAULT_LENGTH}"
+
+read -r -n $length pass < <(LC_ALL=C tr -dc "$characters" < /dev/urandom)
+
+echo "$pass"
