@@ -15,6 +15,4 @@ fi
 
 length="${1:-$DEFAULT_LENGTH}"
 
-read -r -n $length pass < <(LC_ALL=C tr -dc "$characters" < /dev/urandom)
-
-echo "$pass"
+LC_ALL=C tr -dc '[:punct:][:alnum:]' </dev/urandom | head -c $length
