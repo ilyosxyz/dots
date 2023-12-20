@@ -30,6 +30,7 @@ All scripts are in `.local/bin` directory
 | dmenu_pass       | to use for `SUDO_ASKPASS`                                                         |
 | dmenu_term*      | dmenu_run for terminal apps                                                       |
 | dual_head        | to manage 2 monitors                                                              |
+| genpas           | generate random password by length                                                |
 | ifinstalled      | to check if package(s) is/are installed, used in other scripts                    |
 | imgur            | upload images to imgur from file/stdin/url                                        |
 | mount_menu       | mount/unmount drives interactively                                                |
