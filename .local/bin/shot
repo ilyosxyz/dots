@@ -20,7 +20,7 @@ esac
 p="$2"
 
 if [ -z "$p" ]; then
-  p="$(printf "full\nwindow\nselected\n" | dmenu)" || exit 2
+  p="$(printf "selected\nwindow\nfull\n" | dmenu)" || exit 2
 fi
 
 case "$p" in
