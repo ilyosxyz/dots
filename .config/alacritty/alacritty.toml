@@ -1,4 +1,4 @@
-import = ["/home/khurozov/.config/alacritty/dracula.toml"]
+import = ["~/.config/alacritty/dracula.toml"]
 
 [cursor]
 blink_interval = 700
