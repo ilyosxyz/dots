@@ -5,6 +5,6 @@
 
 ifinstalled --notify transmission-cli || exit 1
 
-pidof transmission-daemon >/dev/null || (transmission-daemon && notify-send "Starting transmission daemon..." && sleep 3 && pkill -RTMIN+7 "${STATUSBAR:-dwmblocks}")
+pidof transmission-daemon >/dev/null || (transmission-daemon && notify-send "Starting transmission daemon..." && sleep 3)
 
-transmission-remote -a "$@" && notify-send "🔽 Torrent added."
+transmission-remote -a "$@" && notify-send "Torrent added."
