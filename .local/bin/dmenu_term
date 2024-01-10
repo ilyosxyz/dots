@@ -1,4 +1,20 @@
 #!/bin/sh
 
-# like dmenu_run, but opens in terminal
-dmenu_path | dmenu "$@" | xargs -I "{}" $TERMINAL -e bash -c '{}; printf "\nPress any key"; read -n1'
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: dmenu_run for terminal apps
+
+usage: $NAME
+"
+  printf "%s" "$INFO"
+}
+
+term() {
+  dmenu_path | dmenu "$@" | xargs -I "{}" $TERMINAL -e bash -c '{}; printf "\nPress any key"; read -n1'
+}
+
+case "$1" in 
+  --help)   help_opt;;
+  *)        term;;
+esac

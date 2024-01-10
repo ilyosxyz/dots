@@ -2,6 +2,22 @@
 
 file="$HOME/.local/share/bookmarks"
 
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: bookmark manager
+
+usage: $NAME <command>
+
+commands:
+  type      type selected bookmark
+  add       add new bookmark form primary selection
+  edit      open bookmarks file ($file) using default editor
+  delete    delete selected bookmark
+"
+  printf "%s" "$INFO"
+}
+
 select_bm() {
   list="$(grep -v '^#' "$file" 2>/dev/null)"
   
@@ -56,8 +72,9 @@ edit_bm() {
 }
 
 case "$1" in
+  type)   type_bm;;
   add)    add_bm;;
   edit)   edit_bm;;
   delete) delete_bm;;
-  *)      type_bm;;
+  *)      help_opt;;
 esac

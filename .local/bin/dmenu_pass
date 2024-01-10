@@ -1,8 +1,24 @@
 #!/bin/sh
 
-# script to use as SUDO_ASKPASS variable,
-# meaning it'll be used as a password prompt if needed
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: password reader using dmenu
 
-ifinstalled dmenu || exit 1
+usage: $NAME [prompt]
 
-dmenu -p "$1" -nf black -nb black <&-
+Shows dmenu with prompt for password and outputs it. Main use is for SUDO_ASKPASS.
+"
+  printf "%s" "$INFO"
+}
+
+pass() {
+  ifinstalled dmenu || exit 1
+
+  dmenu -p "$1" -nf black -nb black <&-
+}
+
+case "$1" in
+  --help)   help_opt;;
+  *)        pass;;
+esac
