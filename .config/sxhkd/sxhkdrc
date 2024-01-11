@@ -46,7 +46,7 @@ control + shift + {braceleft,braceright,bar}
 
 # bookmarks
 super + {_,control +,shift +,alt +} b
-  bookmark_menu {_,add,delete,edit}
+  bookmark_menu {type,add,delete,edit}
 
 # xkeytoggle
 super + space
