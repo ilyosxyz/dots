@@ -7,7 +7,7 @@ while pgrep -x polybar >/dev/null; do killall -q polybar; done
 export POLYBAR_SCRIPTS="$(dirname $0)/scripts"
 
 # launch main bar
-MAIN_POLYBAR="$(dual_head get_main)" && export MAIN_POLYBAR && polybar main &
+MAIN_POLYBAR="$(dual_head main)" && export MAIN_POLYBAR && polybar main &
 
 # launch extra bar if 2nd window is attached
-HDMI_POLYBAR="$(dual_head get_hdmi)" && export HDMI_POLYBAR && polybar extra &
+EXTRA_POLYBAR="$(dual_head extra)" && export EXTRA_POLYBAR && polybar extra &

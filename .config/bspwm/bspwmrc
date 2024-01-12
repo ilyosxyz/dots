@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # multi-monitor management
-main="$(dual_head get_main)"
-if hdmi="$(dual_head get_hdmi)"; then
-  bspc monitor "$hdmi" -d 1 2 3 4
+main="$(dual_head main)"
+if extra="$(dual_head extra)"; then
+  bspc monitor "$extra" -d 1 2 3 4
   bspc monitor "$main" -d 5 6 7 8 9 10
-  bspc wm -O "$hdmi" "$main"
+  bspc wm -O "$extra" "$main"
 else
   bspc monitor $main -d 1 2 3 4 5 6 7 8 9 10
 fi

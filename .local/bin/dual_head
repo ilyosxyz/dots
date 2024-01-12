@@ -2,38 +2,52 @@
 
 # custom script to handle extra monitor to a laptop
 
-main_file=/tmp/main_monitor
-hdmi_file=/tmp/hdmi_monitor
+main_file=/tmp/main_display
+extra_file=/tmp/extra_display
+
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: manage dual display
+
+usage: $NAME <command>
+
+commands:
+  detect    detect main and extra displays and arrange them automatically
+  main      get main display name
+  extra     get extra display name
+"
+  printf "%s" "$INFO"
+}
 
 detect() {
-  echo "detect"
   main="$(xrandr -q | grep " connected" | grep "DP")"
   main="${main%% *}"
   echo "$main" > $main_file
 
-  if hdmi="$(xrandr -q | grep " connected" | grep "HDMI")"; then
-    hdmi="${hdmi%% *}"
-    echo "$hdmi" > $hdmi_file
+  if extra="$(xrandr -q | grep " connected" | grep "HDMI")"; then
+    extra="${extra%% *}"
+    echo "$extra" > $extra_file
 
-    xrandr --output "$main" --mode 1920x1080 --primary --output "$hdmi" --mode 1920x1080 --left-of "$main"
+    xrandr --output "$main" --mode 1920x1080 --primary --output "$extra" --mode 1920x1080 --left-of "$main"
   else
-    rm $hdmi_file > /dev/null 2>&1
+    rm $extra_file > /dev/null 2>&1
     
     xrandr --output "$main" --mode 1920x1080 --primary
   fi
-  echo "after dual_head"
 }
 
-get_main() {
+main() {
   cat $main_file 2>/dev/null
 }
 
-get_hdmi() {
-  cat $hdmi_file 2>/dev/null
+extra() {
+  cat $extra_file 2>/dev/null
 }
 
 case "$1" in 
-  "get_main") get_main;;
-  "get_hdmi") get_hdmi;;
-  *) detect;;
+  detect) detect;;
+  main)   main;;
+  extra)  extra;;
+  *)      help_opt;;
 esac
