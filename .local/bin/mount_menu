@@ -1,10 +1,20 @@
 #!/bin/sh
 
-# mounts drives
-
 ifinstalled --notify dmenu || exit 1
 
-if [ "$1" = mount ]; then
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: mount/unmount drives interactively
+
+usage: $NAME (mount|unmount)
+  mount       show menu for mounting drives
+  unmount     show menu for unmounting drives
+"
+  printf "%s" "$INFO"
+}
+
+mount() {
   list="$(lsblk -lp | awk '/part $/ {print $1 " (" $4 ")"}')"
 
   if [ -z "$list" ]; then
@@ -30,7 +40,9 @@ if [ "$1" = mount ]; then
   else
     exit 7
   fi
-elif [ "$1" = unmount ]; then
+}
+
+unmount() {
   list="$(lsblk -lp | awk '/part/&&!/\/$|\/boot|SWAP|\/home\/[\w]\+$|part $/{print $7 " (" $1 "[" $4 "])"}')"
 
   if [ -z "$list" ]; then
@@ -45,4 +57,10 @@ elif [ "$1" = unmount ]; then
   [ -z "$drive" ] && exit 4
 
   sudo umount -l "$drive" && notify-send "$drive unmounted"
-fi
+}
+
+case "$1" in
+  mount)    mount;;
+  unmount)  unmount;;
+  *)        help_opt;;
+esac

@@ -1,25 +1,42 @@
 #!/bin/sh
 
-# simple script to check if package is installed for using in other scripts
-# 
-# use --notify to show notification
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: check if package is installed
+
+usage: $NAME [--notify] packages
+  --notify    show notification in case of error
+  packages    space seperated list of packages to check
+"
+  printf "%s" "$INFO"
+}
 
 error() {
   if [ "$notify" -eq 1 ]; then
     notify-send "$1" "must be installed"
+  else
+    echo "$1 must be installed"
   fi
   exit 1
 }
 
-if [ "$1" = "--notify" ]; then
-  notify=1;
-  shift;
-else
-  notify=0;
-fi
+check_packs() {
+  if [ "$1" = "--notify" ]; then
+    notify=1;
+    shift;
+  else
+    notify=0;
+  fi
 
-for x in "$@"; do
-	if ! which "$x" >/dev/null 2>&1; then
- 		error "$x"
-	fi
-done
+  for x in "$@"; do
+    if ! which "$x" >/dev/null 2>&1; then
+      error "$x"
+    fi
+  done
+}
+
+case "$1" in
+  --help)   help_opt;;
+  *)        check_packs "$@";;
+esac
