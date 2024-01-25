@@ -17,7 +17,6 @@ usage: $NAME [-n] [length]
 }
 
 gen() {
-  echo "$1"
   if [ "$1" = "-n" ]; then
     characters="$CHARACTER_SET_NO_SYMBOLS"
     shift
