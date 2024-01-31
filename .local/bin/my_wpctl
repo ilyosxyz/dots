@@ -1,12 +1,34 @@
 #!/bin/sh
 
-# my wpctl wrapper to use in polybar and sxhkd
-
 ifinstalled wpctl || exit 1
 
-def_step=1
+DEF_STEP=1
 speaker=@DEFAULT_AUDIO_SINK@
 mic=@DEFAULT_AUDIO_SOURCE@
+
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: wpctl wrapper
+
+usage: $NAME ACTION [VALUE]
+
+ACTIONS:
+  mute            toggle mute status
+  inc             increment volume by VALUE % or default $DEF_STEP%
+  dec             decrement volume by VALUE % or default $DEF_STEP%
+  get-vol         get volume
+  set-vol         set volume to VALUE %
+  mic-mute        toggle mute status of mic
+  mic-inc         increment volume by VALUE % or default $DEF_STEP%
+  mic-dec         decrement volume by VALUE % or default $DEF_STEP%
+  mic-get-vol     get mic volume
+  mic-set-vol     set mic volume to VALUE %
+  --help          this menu
+"
+  printf "%s" "$INFO"
+}
+
 
 get_vol() {
   vol="$(wpctl get-volume "$1")"
@@ -46,7 +68,7 @@ inc() {
   mute "$1" 0
 
   cur="$(get_vol_num "$1")"
-  step="${2:-$def_step}"
+  step="${2:-$DEF_STEP}"
   next=$((cur + step))
 
   set_vol "$1" $next
@@ -54,7 +76,7 @@ inc() {
 
 dec() {
   cur="$(get_vol_num "$1")"
-  step="${2:-$def_step}"
+  step="${2:-$DEF_STEP}"
   next=$((cur - step))
 
   set_vol "$1" $next
@@ -62,16 +84,18 @@ dec() {
 
 case "$1" in
   #speakers or headsets
-  "mute")         mute $speaker "$2" ;;
-  "inc")          inc $speaker "$2" ;;
-  "dec")          dec $speaker "$2" ;;
-  "get-vol")      get_vol $speaker ;;
-  "set-vol")      set_vol $speaker "$2" ;;
+  mute)         mute $speaker "$2" ;;
+  inc)          inc $speaker "$2" ;;
+  dec)          dec $speaker "$2" ;;
+  get-vol)      get_vol $speaker ;;
+  set-vol)      set_vol $speaker "$2" ;;
   
   #microphone
-  "mic-mute")     mute "$mic" "$2" ;;
-  "mic-inc")      inc "$mic" "$2" ;;
-  "mic-dec")      dec "$mic" "$2" ;;
-  "mic-get-vol")  get_vol "$mic" ;;
-  "mic-set-vol")  set_vol "$mic" "$2" ;;
+  mic-mute)     mute "$mic" "$2" ;;
+  mic-inc)      inc "$mic" "$2" ;;
+  mic-dec)      dec "$mic" "$2" ;;
+  mic-get-vol)  get_vol "$mic" ;;
+  mic-set-vol)  set_vol "$mic" "$2" ;;
+
+  *)            help_opt  
 esac

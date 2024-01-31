@@ -7,9 +7,9 @@ help_opt() {
   INFO="
 $NAME: bookmark manager
 
-usage: $NAME <command>
+usage: $NAME COMMMAND
 
-commands:
+COMMANDS:
   type      type selected bookmark
   add       add new bookmark form primary selection
   edit      open bookmarks file ($file) using default editor

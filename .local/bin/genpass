@@ -9,9 +9,9 @@ help_opt() {
   INFO="
 $NAME: random password generator
 
-usage: $NAME [-n] [length]
+usage: $NAME [-n] [LENGTH]
   -n        no symbol, use only alphanumeric charaters
-  length    length of generated password, default $DEFAULT_LENGTH
+  LENGTH    length of generated password, default $DEFAULT_LENGTH
 "
   printf "%s" "$INFO"
 }

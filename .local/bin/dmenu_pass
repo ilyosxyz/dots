@@ -5,9 +5,9 @@ help_opt() {
   INFO="
 $NAME: password reader using dmenu
 
-usage: $NAME [prompt]
+usage: $NAME [PROMPT]
 
-Shows dmenu with prompt for password and outputs it. Main use is for SUDO_ASKPASS.
+Shows dmenu with PROMPT for password and outputs it. Main use is for SUDO_ASKPASS.
 "
   printf "%s" "$INFO"
 }

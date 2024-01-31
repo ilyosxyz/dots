@@ -5,9 +5,9 @@ help_opt() {
   INFO="
 $NAME: check if package is installed
 
-usage: $NAME [--notify] packages
+usage: $NAME [--notify] PACKAGES
   --notify    show notification in case of error
-  packages    space seperated list of packages to check
+  PACKAGES    space seperated list of packages to check
 "
   printf "%s" "$INFO"
 }

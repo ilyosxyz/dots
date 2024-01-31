@@ -10,9 +10,9 @@ help_opt() {
   INFO="
 $NAME: manage dual display
 
-usage: $NAME <command>
+usage: $NAME COMMAND
 
-commands:
+COMMANDS:
   detect    detect main and extra displays and arrange them automatically
   main      get main display name
   extra     get extra display name
