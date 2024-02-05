@@ -56,6 +56,10 @@ super + space
 super + {_,shift +} p
   pass_menu {_,LAST}
 
+# simulate mouse button 8/9
+super + alt + {Left,Right}
+  xdotool click {8,9}
+
 ### BSPWM ###
 
 # quit bspwm
