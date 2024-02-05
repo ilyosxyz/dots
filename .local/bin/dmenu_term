@@ -16,5 +16,5 @@ term() {
 
 case "$1" in 
   --help)   help_opt;;
-  *)        term;;
+  *)        term "$@";;
 esac
