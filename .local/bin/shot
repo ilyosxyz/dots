@@ -1,8 +1,33 @@
 #!/bin/sh
 
-# little script to take screenshots using maim
-
 name="shot_$(date '+%y%m%d%H%M%S').png"
+
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: helper to take screenshots
+
+usage: $NAME [ACTION [AREA]]
+
+ACTIONS:
+  copy      copy image to clipboard
+  save      save image to home directory,
+            example name $name. Set SHOT_DIRECTORY
+            variable to change directory
+  upload    upload image to imgur
+
+AREAS:
+  full        fullscreen
+  window      active window
+  selected    selected area
+
+If ACTION or AREA isn't selected shows menu for them
+"
+  printf "%s" "$INFO"
+  exit
+}
+
+[ "$1" = --help ] && help_opt
 
 o="$1"
 
@@ -12,7 +37,7 @@ fi
 
 case "$o" in
   copy)   out="| xclip -sel clip -t image/png";;
-  save)   out="$HOME/$name";;
+  save)   out="${SHOT_DIRECTORY:-$HOME}/$name";;
   upload) out="| imgur -";;
   *)      echo "Invalid 1st arg"; exit 1;;
 esac
