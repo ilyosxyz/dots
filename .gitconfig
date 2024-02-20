@@ -2,3 +2,9 @@
 	name = Ilyos Khurozov
 	email = ilyos@khurozov.uz
 	signingkey = 627C9E675DDF7D72
+[init]
+	defaultBranch = main
+[commit]
+	gpgsign = true
+[alias]
+	plog = log --pretty=format:\"%Cgreen%h %Cblue%an <%ae> %Creset%s\"
