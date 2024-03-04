@@ -19,3 +19,6 @@ map("n", "<A-S-k>", ":resize +2<CR>")
 map("n", "<A-S-j>", ":resize -2<CR>")
 map("n", "<A-S-l>", ":vertical resize +2<CR>")
 map("n", "<A-S-h>", ":vertical resize -2<CR>")
+
+-- windows-1251 encoding for russian characters
+map("n", "<F8>", ":e ++enc=cp1251<CR>")
