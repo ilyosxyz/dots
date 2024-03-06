@@ -1,18 +1,30 @@
 #!/bin/sh
 
-show_ssid=0
-sleep_pid=0
+show_wifi=false
+show_speed=false
 
-toggle() {
-  show_ssid=$(( (show_ssid + 1) % 2 ))
+toggle_wifi() {
+  $show_wifi && show_wifi=false || show_wifi=true
+}
+
+toggle_speed() {
+  $show_speed && show_speed=false || show_speed=true
 }
 
 status() {
+  #speed
+  if $show_speed; then
+    net_speed
+  fi
+  
+  
   # wifi
   if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null; then
     # wifi is connected
-    printf "$(awk '/^\s*w/ { print int($3 * 100 / 70) "%% " }' /proc/net/wireless)"
-    [ $show_ssid -eq 1 ] && printf "$(iwgetid -r) "
+    if $show_wifi; then
+      printf "$(awk '/^\s*w/ { print int($3 * 100 / 70) "%% " }' /proc/net/wireless)"
+      printf "$(iwgetid -r) "
+    fi
     printf "󰀂"
   elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null; then
     # wifi is not connected
@@ -32,11 +44,11 @@ status() {
   printf "%s\n" "$(sed "s/down/󰅛/;s/up/󰱓/" /sys/class/net/e*/operstate 2>/dev/null | tr -d '\n')"
 }
 
-trap "toggle" USR1
+trap "toggle_wifi" USR1
+trap "toggle_speed" USR2
 
 while true; do
   status
   sleep 5 &
-  sleep_pid=$!
   wait
 done
