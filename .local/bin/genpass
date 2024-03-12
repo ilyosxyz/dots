@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DEFAULT_LENGTH=25
+DEFAULT_LENGTH=32
 CHARACTER_SET="[:punct:][:alnum:]"
 CHARACTER_SET_NO_SYMBOLS="[:alnum:]"
 
