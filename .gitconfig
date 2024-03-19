@@ -8,5 +8,6 @@
 	gpgsign = true
 [alias]
 	lg = log --pretty=format:\"%Cgreen%h %Cblue%ad %Cgreen%an <%ae> %Creset%s%C(auto)%d\" --date=format:\"%Y-%m-%d %H:%M:%S\"
+	lg10 = log --pretty=format:\"%Cgreen%h %Cblue%ad %Cgreen%an <%ae> %Creset%s%C(auto)%d\" --date=format:\"%Y-%m-%d %H:%M:%S\" -n10 --
 	st = status
 	cm = commit
