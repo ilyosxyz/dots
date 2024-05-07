@@ -10,8 +10,11 @@ super + x
 super + w
   $BROWSER
 
-super + shift + w 
+super + shift + w
   $BROWSER --incognito
+
+super + alt + w
+  $BROWSER --tor
 
 super + {_,shift + }e
   {$TERMINAL -e lf,pcmanfm}
