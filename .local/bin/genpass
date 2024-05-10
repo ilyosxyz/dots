@@ -9,8 +9,9 @@ help_opt() {
   INFO="
 $NAME: random password generator
 
-usage: $NAME [-n] [LENGTH]
+usage: $NAME [-n] [-c] [LENGTH]
   -n        no symbol, use only alphanumeric charaters
+  -c        copy generated password to clipboard
   LENGTH    length of generated password, default $DEFAULT_LENGTH
 "
   printf "%s" "$INFO"
@@ -24,9 +25,20 @@ gen() {
     characters="$CHARACTER_SET"
   fi
 
+  if [ "$1" = "-c" ]; then
+    cmd="printf \"\$pass\" | xclip -sel c"
+    shift
+  else
+    cmd="echo \"\$pass\""
+  fi
+
   length="${1:-$DEFAULT_LENGTH}"
 
-  LC_ALL=C tr -dc "$characters" </dev/urandom | head -c $length && echo
+  pass="$(LC_ALL=C tr -dc "$characters" </dev/urandom | head -c $length 2> /dev/null)"
+
+  [ $? -ne 0 ] && exit 1
+
+  eval "$cmd"
 }
 
 if [ "$1" = "--help" ]; then
