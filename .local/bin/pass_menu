@@ -13,7 +13,7 @@ $NAME: helper menu for pass
 usage: $NAME [LAST]
   
 Shows list of available passwords. After select shows
-menu for password, username and otp based on context.
+menu for password, username, url and otp based on context.
 Then types data based on selection.
 
 Add LAST for skipping password selection menu and 
@@ -34,7 +34,7 @@ pass_option() {
 
   [ -z "$d" ] && exit 1
 
-  echo "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^otpauth:.*/otp/p;" | dmenu -i -p "$1"
+  echo "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^url:.*/url/p; s/^otpauth:.*/otp/p;" | dmenu -i -p "$1"
 }
 
 type_password() {
@@ -43,6 +43,10 @@ type_password() {
 
 type_username() {
   pass show "$1" 2>/dev/null | sed -n 's/^username://p;' | tr -d '\n' | $pass_type
+}
+
+type_url() {
+  pass show "$1" 2>/dev/null | sed -n 's/^url://p;' | tr -d '\n' | $pass_type
 }
 
 type_otp() {
@@ -62,5 +66,6 @@ fi
 case "$(pass_option "$p")" in
   password) type_password "$p";;
   username) type_username "$p";;
+  url)      type_url "$p";;
   otp)      type_otp "$p";;
 esac
