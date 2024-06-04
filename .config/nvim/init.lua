@@ -90,3 +90,38 @@ vim.keymap.set("n", "<A-S-h>", ":vertical resize -2<CR>")
 
 -- windows-1251 encoding for russian characters
 vim.keymap.set("n", "<F8>", ":e ++enc=cp1251<CR>")
+
+-------------------
+-- P L U G I N S --
+-------------------
+
+-- init lazy
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- setup lazy
+require("lazy").setup({
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            local t = require("tokyonight")
+            t.setup({
+                style = "night",
+                transparent = true,
+            })
+            t.load()
+        end,
+    },
+})

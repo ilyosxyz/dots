@@ -1,4 +1,4 @@
-import = ["~/.config/alacritty/dracula.toml"]
+import = ["~/.config/alacritty/tokyonight_night.toml"]
 
 [cursor]
 blink_interval = 700
