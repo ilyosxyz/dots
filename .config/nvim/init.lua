@@ -124,4 +124,10 @@ require("lazy").setup({
             t.load()
         end,
     },
+    {
+        'vimwiki/vimwiki',
+        init = function()
+            vim.g.vimwiki_list = {{path = '~/.local/share/vimwiki', syntax = 'markdown', ext = '.md'}}
+        end
+    },
 })

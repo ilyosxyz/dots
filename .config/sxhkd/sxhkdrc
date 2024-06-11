@@ -59,6 +59,9 @@ super + space
 super + {_,shift +} p
   pass_menu {_,LAST}
 
+super + control + {w,W}
+  $TERMINAL -e nvim {+VimwikiIndex,+VimwikiDiaryIndex +VimwikiDiaryGenerateLinks}
+
 ### BSPWM ###
 
 # quit bspwm
