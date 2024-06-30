@@ -1,0 +1,88 @@
+#!/bin/sh
+
+# pass wrapper script
+
+type_it="xdotool type --delay 0 --clearmodifiers --file -"
+tpl="/tmp/pass_last"
+
+help_opt() {
+  NAME="${0##*/}"
+  INFO="
+$NAME: helper tool for pass
+
+usage: $NAME [option] [item]
+
+OPTION:
+    --password      returns password from item, if exists
+    --username      returns username from item, if exists
+    --url           returns url from item, if exists
+    --otp           returns otp from item, if exists
+    --menu          shows menu for selecting item if item not given.
+                    If value of item is LAST, last selected item will
+                    be used. In next step show menu for selecting item's 
+                    parts (password, username, url, otp). Then selected 
+                    part will be typed
+    --help          shows this message
+"
+  printf "%s" "$INFO"
+
+  exit 0
+}
+
+item_select() {
+  prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}/"
+  find "$prefix" -name "*.gpg" | sed "s:$prefix::; s:.gpg::" | sort | dmenu -i -p "Select:"
+}
+
+item_part() {
+  d="$(pass show "$1" 2>/dev/null)"
+
+  [ -z "$d" ] && exit 1
+
+  echo "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^url:.*/url/p; s/^otpauth:.*/otp/p;" | dmenu -i -p "$1"
+}
+
+get_password() {
+  pass show "$1" 2>/dev/null | sed 1q | tr -d '\n'
+}
+
+get_username() {
+  pass show "$1" 2>/dev/null | sed -n 's/^username://p;' | tr -d '\n'
+}
+
+get_url() {
+  pass show "$1" 2>/dev/null | sed -n 's/^url://p;' | tr -d '\n'
+}
+
+get_otp() {
+  pass otp code "$1" 2>/dev/null | tr -d '\n'
+}
+
+show_menu() {
+    if [ "$1" = "LAST" ]; then
+        item="$(cat $tpl 2>/dev/null || item_select)"
+    else
+        [ -n "$1" ] && item="$1" || item="$(item_select)"
+    fi
+
+    [ -n "$item" ] && echo "$item" > "$tpl" || exit 1
+
+    case "$(item_part "$item")" in
+        password) get_password "$item" | $type_it;;
+        username) get_username "$item" | $type_it;;
+        url)      get_url "$item" | $type_it;;
+        otp)      get_otp "$item" | $type_it;;
+    esac
+
+}
+
+[ "$1" = --help ] && help_opt
+
+case "$1" in
+    --password) get_password "$2";;
+    --username) get_username "$2";;
+    --url)      get_url "$2";;
+    --otp)      get_otp "$2";;
+    --menu)     show_menu "$2";;
+    *)          help_opt;;
+esac
