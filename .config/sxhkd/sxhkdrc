@@ -60,7 +60,7 @@ super + {_,shift +} p
   pass_menu {_,LAST}
 
 super + control + {w,W}
-  $TERMINAL --class vimwiki -e nvim {+VimwikiIndex,+VimwikiDiaryIndex}
+  $TERMINAL -e nvim {+VimwikiIndex,+VimwikiDiaryIndex}
 
 ### BSPWM ###
 
