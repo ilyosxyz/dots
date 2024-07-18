@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ifinstalled --notify $MENU || exit 1
+ifinstalled --notify menu || exit 1
 
 help_opt() {
   NAME="${0##*/}"
@@ -22,16 +22,16 @@ mount() {
     exit 2
   fi
 
-  drive="$(lsblk -lp | awk '/part $/ {print $1 " (" $4 ")"}' | $MENU -p "Which to mount?")" || exit 3
+  drive="$(lsblk -lp | awk '/part $/ {print $1 " (" $4 ")"}' | menu -p "Which to mount?")" || exit 3
   drive="${drive%% *}"
 
   [ -z "$drive" ] && exit 4
 
   sudo mount "$drive" && notify-send "$drive" "mounted according to fstab" && exit 0
 
-  mp="$(find /mnt /media /mount /home -maxdepth 1 -type d 2>/dev/null | $MENU -p "Mount to where?")" || exit 5
+  mp="$(find /mnt /media /mount /home -maxdepth 1 -type d 2>/dev/null | menu -p "Mount to where?")" || exit 5
   if [ ! -d "$mp" ]; then
-    mdir=$(printf "Yes\nNo" | $MENU -p "$mp does not exist. Create it?") || exit 6
+    mdir=$(printf "Yes\nNo" | menu -p "$mp does not exist. Create it?") || exit 6
     [ "$mdir" = "Yes" ] && (mkdir -p "$mp" || sudo mkdir -p "$mp")
   fi
 
@@ -50,7 +50,7 @@ unmount() {
     exit 2
   fi
 
-  drive="$(echo "$list" | $MENU -p "Which to unmount?")" || exit 3
+  drive="$(echo "$list" | menu -p "Which to unmount?")" || exit 3
   drive="${drive##*\(}"
   drive="${drive%%[*}"
 

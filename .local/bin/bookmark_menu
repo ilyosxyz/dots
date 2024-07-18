@@ -25,14 +25,14 @@ select_bm() {
     notify-send "No bookmarks" "Check $file"
     exit 1
   else
-    grep -v -E '^#|^\s*$' "$file" | $MENU -l 10
+    grep -v -E '^#|^\s*$' "$file" | menu -l 10
   fi
 }
 
 confirm_bm() {
   read p < /dev/stdin
   [ -z "$p" ] && exit 1
-  ans="$(printf "Yes\nNo" | $MENU -p "$1 $p?" -i)" || exit 2
+  ans="$(printf "Yes\nNo" | menu -p "$1 $p?" -i)" || exit 2
   [ -z "${ans%%*Yes*}" ] && echo "$p"
 }
 
@@ -44,7 +44,7 @@ type_bm() {
 
 add_bm() {
   bookmark="$(xclip -o | confirm_bm Add)" || exit 4
-  note="$($MENU -p "note:" <&-)"
+  note="$(menu -p "note:" <&-)"
   
   if grep -q "^$bookmark" "$file"; then
     notify-send "Oops!" "Already bookmarked"

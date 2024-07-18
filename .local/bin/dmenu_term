@@ -11,7 +11,7 @@ usage: $NAME
 }
 
 term() {
-  dmenu_path | $MENU "$@" | xargs -I "{}" $TERMINAL -e bash -c '{}; printf "\nPress any key"; read -n1'
+  dmenu_path | menu "$@" - | xargs -I "{}" $TERMINAL -e bash -c '{}; printf "\nPress any key"; read -n1'
 }
 
 case "$1" in 
