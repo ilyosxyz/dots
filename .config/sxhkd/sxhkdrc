@@ -2,7 +2,7 @@ super + Return
   $TERMINAL
 
 super + {d,D}
-  dmenu_{run,term} -p app
+  dmenu_{run,term} -p 'App:' -fn 'Iosevka Fixed-10'
 
 super + x
   slock -m "$(cowsay Enter password)"

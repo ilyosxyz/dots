@@ -7,6 +7,7 @@ export PATH="$PATH$(find $HOME/.local/bin -type d -printf :%p)"
 export TERMINAL="alacritty"
 export EDITOR="nvim"
 export BROWSER="brave"
+export MENU="dmenu -i -fn 'Iosevka Fixed-10'"
 
 # some program settings
 export SUDO_ASKPASS="$HOME/.local/bin/dmenu_pass"

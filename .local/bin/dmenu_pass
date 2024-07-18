@@ -13,9 +13,9 @@ Shows dmenu with PROMPT for password and outputs it. Main use is for SUDO_ASKPAS
 }
 
 pass() {
-  ifinstalled dmenu || exit 1
+  ifinstalled $MENU || exit 1
 
-  dmenu -p "$1" -nf black -nb black <&-
+  $MENU -p "$1" -nf black -nb black <&-
 }
 
 case "$1" in

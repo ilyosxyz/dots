@@ -31,7 +31,7 @@ OPTION:
 
 item_select() {
   prefix="${PASSWORD_STORE_DIR:-$HOME/.password-store}/"
-  find "$prefix" -name "*.gpg" | sed "s:$prefix::; s:.gpg::" | sort | dmenu -i -p "Select:"
+  find "$prefix" -name "*.gpg" | sed "s:$prefix::; s:.gpg::" | sort | $MENU -p "Select:"
 }
 
 item_part() {
@@ -39,7 +39,7 @@ item_part() {
 
   [ -z "$d" ] && exit 1
 
-  echo "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^url:.*/url/p; s/^otpauth:.*/otp/p;" | dmenu -i -p "$1"
+  echo "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^url:.*/url/p; s/^otpauth:.*/otp/p;" | $MENU -p "$1"
 }
 
 get_password() {
