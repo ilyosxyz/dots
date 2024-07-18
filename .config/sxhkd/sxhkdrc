@@ -59,8 +59,8 @@ super + space
 super + {_,shift +} p
   passplus --menu {_,LAST}
 
-super + control + {w,W}
-  $TERMINAL -e nvim {+VimwikiIndex,+VimwikiDiaryIndex}
+super + control + {w,W,d,D}
+  $TERMINAL -e nvim {+VimwikiIndex,+VimwikiIndex +"VimwikiGoto TODO",+VimwikiDiaryIndex,+VimwikiDiaryIndex +VimwikiDiaryPrevDay}
 
 ### BSPWM ###
 
