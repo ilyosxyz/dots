@@ -1,6 +1,6 @@
 #!/bin/sh
 
-name="shot_$(date '+%y%m%d%H%M%S').png"
+name='shot_$(date "+%y%m%d%H%M%S").png'
 
 help_opt() {
   NAME="${0##*/}"
