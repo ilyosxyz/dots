@@ -39,7 +39,7 @@ item_part() {
 
   [ -z "$d" ] && exit 1
 
-  echo "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^url:.*/url/p; s/^otpauth:.*/otp/p;" | menu -p "$1"
+  printf "%s" "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^url:.*/url/p; s/^otpauth:.*/otp/p;" | menu -p "$1"
 }
 
 get_password() {
