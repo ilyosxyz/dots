@@ -8,13 +8,10 @@ super + x
   slock -m "$(cowsay Enter password)"
 
 super + w
-  $BROWSER
+  firefox
 
 super + shift + w
-  $BROWSER --incognito
-
-super + alt + w
-  $BROWSER --tor
+  firefox --private-window
 
 super + {_,shift + }e
   {$TERMINAL -e lf,pcmanfm}

@@ -6,7 +6,6 @@ export PATH="$PATH$(find $HOME/.local/bin -type d -printf :%p)"
 # default apps
 export TERMINAL="alacritty"
 export EDITOR="nvim"
-export BROWSER="brave"
 
 # some program settings
 export SUDO_ASKPASS="$HOME/.local/bin/dmenu_pass"
