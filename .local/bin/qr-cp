@@ -1,0 +1,3 @@
+#!/bin/sh
+
+maim -qs | zbarimg --raw -q - | tr -d "\n" | xclip -se c
