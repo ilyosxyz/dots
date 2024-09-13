@@ -15,13 +15,13 @@ usage: $NAME [option] [item]
 OPTION:
     --password      returns password from item, if exists
     --username      returns username from item, if exists
-    --url           returns url from item, if exists
-    --otp           returns otp from item, if exists
+    --link          returns link from item, if exists
+    --totp          returns totp from item, if exists
     --menu          shows menu for selecting item if item not given.
                     If value of item is LAST, last selected item will
                     be used. In next step show menu for selecting item's 
-                    parts (password, username, url, otp). Then selected 
-                    part will be typed
+                    parts (password, username, link, totp).
+                    Then selected part will be typed
     --help          shows this message
 "
   printf "%s" "$INFO"
@@ -39,7 +39,7 @@ item_part() {
 
   [ -z "$d" ] && exit 1
 
-  printf "%s" "$d" | sed -n "1 s/.*/password/p; s/^username:.*/username/p; s/^url:.*/url/p; s/^otpauth:.*/otp/p;" | menu -p "$1"
+  printf "%s" "$d" | sed -nr "1 s/.*/password/p; s/^username:.*/username/p; s/^link:.*/link/p; s/^otpauth:\/\/totp\/.*/totp/p;" | menu -p "$1"
 }
 
 get_password() {
@@ -50,11 +50,11 @@ get_username() {
   pass show "$1" 2>/dev/null | sed -n 's/^username://p;' | tr -d '\n'
 }
 
-get_url() {
-  pass show "$1" 2>/dev/null | sed -n 's/^url://p;' | tr -d '\n'
+get_link() {
+  pass show "$1" 2>/dev/null | sed -n 's/^link://p;' | tr -d '\n'
 }
 
-get_otp() {
+get_totp() {
   pass otp code "$1" 2>/dev/null | tr -d '\n'
 }
 
@@ -70,8 +70,8 @@ show_menu() {
     case "$(item_part "$item")" in
         password) get_password "$item" | $type_it;;
         username) get_username "$item" | $type_it;;
-        url)      get_url "$item" | $type_it;;
-        otp)      get_otp "$item" | $type_it;;
+        link)     get_link "$item" | $type_it;;
+        totp)     get_totp "$item" | $type_it;;
     esac
 
 }
@@ -81,8 +81,8 @@ show_menu() {
 case "$1" in
     --password) get_password "$2";;
     --username) get_username "$2";;
-    --url)      get_url "$2";;
-    --otp)      get_otp "$2";;
+    --link)     get_link "$2";;
+    --totp)     get_totp "$2";;
     --menu)     show_menu "$2";;
     *)          help_opt;;
 esac
