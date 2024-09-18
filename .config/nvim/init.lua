@@ -26,9 +26,16 @@ vim.opt.swapfile = false
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.mouse = 'a'
 
--- show numbers
+-- show numbers & sign column
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.signcolumn = "yes"
+
+-- don't wrap lines
+vim.opt.wrap = false
+
+-- default utf-8
+vim.opt.fileencoding = "utf-8"
 
 -- change <Tab> to <Space>, etc.
 vim.opt.expandtab = true
@@ -76,17 +83,9 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
--- change active slice
-vim.keymap.set("n", "<A-h>", "<C-w>h")
-vim.keymap.set("n", "<A-j>", "<C-w>j")
-vim.keymap.set("n", "<A-k>", "<C-w>k")
-vim.keymap.set("n", "<A-l>", "<C-w>l")
-
--- resize slice
-vim.keymap.set("n", "<A-S-k>", ":resize +2<CR>")
-vim.keymap.set("n", "<A-S-j>", ":resize -2<CR>")
-vim.keymap.set("n", "<A-S-l>", ":vertical resize +2<CR>")
-vim.keymap.set("n", "<A-S-h>", ":vertical resize -2<CR>")
+-- spitting windows
+vim.keymap.set("n", "<leader>wv", ":vsplit<cr>")
+vim.keymap.set("n", "<leader>wh", ":split<cr>")
 
 -- windows-1251 encoding for russian characters
 vim.keymap.set("n", "<F8>", ":e ++enc=cp1251<CR>")
@@ -112,13 +111,13 @@ vim.opt.rtp:prepend(lazypath)
 -- setup lazy
 require("lazy").setup({
     {
-        "folke/tokyonight.nvim",
+        'folke/tokyonight.nvim',
         lazy = false,
         priority = 1000,
         config = function()
-            local t = require("tokyonight")
+            local t = require('tokyonight')
             t.setup({
-                style = "night",
+                style = 'night',
                 transparent = true,
             })
             t.load()
