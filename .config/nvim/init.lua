@@ -129,4 +129,7 @@ require("lazy").setup({
             vim.g.vimwiki_list = {{path = '~/.local/share/vimwiki', auto_diary_index = 1, syntax = 'markdown', ext = '.md'}}
         end
     },
+    {
+        'jamessan/vim-gnupg'
+    },
 })
