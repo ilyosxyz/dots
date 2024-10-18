@@ -13,6 +13,12 @@ super + w
 super + shift + w
   firefox --private-window
 
+super + alt + w
+  brave
+
+super + alt + shift + w
+  brave --tor
+
 super + {_,shift + }e
   {$TERMINAL -e lf,pcmanfm}
 
