@@ -90,6 +90,10 @@ vim.keymap.set("n", "<leader>wh", ":split<cr>")
 -- windows-1251 encoding for russian characters
 vim.keymap.set("n", "<F8>", ":e ++enc=cp1251<CR>")
 
+-- GPG
+vim.keymap.set("v", "<leader>gd", ":'<,'>!gpg -d 2>/dev/null<CR>")
+vim.keymap.set("v", "<leader>ge", ":'<,'>!gpg --default-recipient-self -ae 2>/dev/null<CR>")
+
 -------------------
 -- P L U G I N S --
 -------------------
@@ -128,8 +132,5 @@ require("lazy").setup({
         init = function()
             vim.g.vimwiki_list = {{path = '~/.local/share/vimwiki', auto_diary_index = 1, syntax = 'markdown', ext = '.md'}}
         end
-    },
-    {
-        'jamessan/vim-gnupg'
     },
 })
