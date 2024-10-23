@@ -91,8 +91,8 @@ vim.keymap.set("n", "<leader>wh", ":split<cr>")
 vim.keymap.set("n", "<F8>", ":e ++enc=cp1251<CR>")
 
 -- GPG
-vim.keymap.set("v", "<leader>gd", ":'<,'>!gpg -d 2>/dev/null<CR>")
-vim.keymap.set("v", "<leader>ge", ":'<,'>!gpg --default-recipient-self -ae 2>/dev/null<CR>")
+vim.keymap.set("v", "<leader>gd", ":'<,'>!gpg -qd")
+vim.keymap.set("v", "<leader>ge", ":'<,'>!gpg --default-recipient-self -qae")
 
 -------------------
 -- P L U G I N S --
