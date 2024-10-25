@@ -2,12 +2,13 @@
 
 while read -r file; do
   case "$1" in
-    w) setbg "$file" & ;;
-    r) convert -rotate 90 "$file" "$file" ;;
-    R) convert -rotate -90 "$file" "$file" ;;
-    f) convert -flop "$file" "$file" ;;
-    F) convert -flip "$file" "$file" ;;
-    y) printf "%s" "$file" | tr -d '\n' | xclip -se clip ;;
-    g) ifinstalled gimp && setsid -f gimp "$file" ;;
+    greater)    magick "$file" -rotate 90 "$file" ;;
+    question)   magick "$file" -rotate 180 "$file" ;;
+    less)       magick "$file" -rotate 270 "$file" ;;
+    bar)        magick "$file" -flop "$file" ;;
+    minus)      magick "$file" -flip "$file" ;;
+    Home)       setbg "$file" &;;
+    Delete)     rm "$file" ;;
+    C-c)        printf "%s" "$file" | tr -d '\n' | xclip -se clip ;;
   esac
 done
