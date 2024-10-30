@@ -1,7 +1,19 @@
 #!/bin/sh
 
-# loads/changes wallpaper
+# loads random wallpaper from $XDG_PICTURES_DIR/wall
+# set SETBG_DIR to override it
 
-[ -f "$1" ] && cp "$1" "$HOME/.local/share/wall.png"
+if [ -n "$SETBG_DIR" ]; then
+    dir="$SETBG_DIR"
+else
+    dir="$(xdg-user-dir PICTURES)/wall"
+    [ "$dir" = "/wall" ] && dir="$HOME/Pictures/wall"
+fi
 
-xwallpaper --zoom "$HOME/.local/share/wall.png"
+[ ! -d "$dir" ] && exit 1
+
+img="$(ls $dir/*.png | shuf -n1)"
+
+[ ! -f "$img" ] && exit 2
+
+xwallpaper --zoom "$img"
