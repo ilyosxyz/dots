@@ -73,3 +73,4 @@ map R bulkrename
 map <f-5> duplicate
 map <f-6> newfile
 map <f-7> newdir
+map <c-f> filter
