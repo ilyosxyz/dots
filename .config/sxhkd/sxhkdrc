@@ -58,10 +58,6 @@ super + {_,control +,shift +,alt +} b
 super + space
   xkeytoggle
 
-# passplus
-super + {_,shift +} p
-  passplus --menu {_,LAST}
-
 super + control + {w,W,d,D}
   $TERMINAL -e nvim {+VimwikiIndex,+VimwikiIndex +"VimwikiGoto TODO",+VimwikiDiaryIndex,+VimwikiDiaryIndex +VimwikiDiaryPrevDay}
 

@@ -12,6 +12,7 @@ fi
 
 # autostart
 copyq &
+keepassxc &
 ~/.config/polybar/launch &
 setbg
 
