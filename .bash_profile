@@ -9,17 +9,10 @@ export EDITOR="nvim"
 
 # some program settings
 export SUDO_ASKPASS="$HOME/.local/bin/dmenu_pass"
-export PASSWORD_STORE_DIR="$HOME/.local/share/pass"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-# gpg ssh auth
-unset SSH_AGENT_PID
-if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-fi
-export GPG_TTY=$(tty)
-gpg-connect-agent updatestartuptty /bye >/dev/null
+eval `ssh-agent -s`
 
 # start X
 if [ "$(tty)" = "/dev/tty1" ]; then
