@@ -58,7 +58,7 @@ super + {_,control +,shift +,alt +} b
 super + space
   xkeytoggle
 
-super + control + {w,W,d,D}
+super + control + {n,N,d,D}
   $TERMINAL -e nvim {+VimwikiIndex,+VimwikiIndex +"VimwikiGoto TODO",+VimwikiDiaryIndex,+VimwikiDiaryIndex +VimwikiDiaryPrevDay}
 
 ### BSPWM ###
