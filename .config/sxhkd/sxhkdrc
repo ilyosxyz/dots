@@ -61,6 +61,9 @@ super + space
 super + control + {n,N,d,D}
   $TERMINAL -e nvim {+VimwikiIndex,+VimwikiIndex +"VimwikiGoto TODO",+VimwikiDiaryIndex,+VimwikiDiaryIndex +VimwikiDiaryPrevDay}
 
+super + control + l
+  dmenu_light
+
 ### BSPWM ###
 
 # quit bspwm

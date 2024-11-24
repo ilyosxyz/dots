@@ -1,0 +1,12 @@
+#!/bin/sh
+
+current="$(sudo light -G)"
+next="$(menu -p "$1 Current brightness ${current%%.*} %" <&-)"
+
+[ $? -ne 0 ] && exit
+
+if [ "$next" -ge 0 -a "$next" -le 100 ] 2>/dev/null; then
+    sudo light -S $next
+else
+    "$0" "Enter integer in range [0; 100]."
+fi
