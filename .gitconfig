@@ -1,12 +1,16 @@
 [user]
-	name = Ilyos Khurozov
-	email = ilyos@khurozov.uz
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEO7MG7p9x4rMWD33MRVroInogb1FazX+ubcsFOunjtT ilyos@khurozov.uz
+    name = Ilyos Khurozov
+    email = ilyos@khurozov.uz
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEO7MG7p9x4rMWD33MRVroInogb1FazX+ubcsFOunjtT ilyos@khurozov.uz
 [init]
-	defaultBranch = main
+    defaultBranch = main
+[commit]
+    gpgsign = true
 [alias]
-	lg = log --pretty=format:\"%Cgreen%h%Creset - %Cblue%ad%Creset %s %C(dim white)- %an <%ae>%C(auto)%d\" --date=format:\"%Y-%m-%d %H:%M:%S\"
+    lg = log --pretty=format:\"%Cgreen%h%Creset - %Cblue%ad%Creset %s %C(dim white)- %an <%ae>%C(auto)%d\" --date=format:\"%Y-%m-%d %H:%M:%S\"
 [core]
-	autocrlf = input
+    autocrlf = input
 [gpg]
-	format = ssh
+    format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowedSSHSigners
