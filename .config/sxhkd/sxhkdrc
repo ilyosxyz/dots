@@ -14,7 +14,7 @@ super + shift + w
   firefox --private-window
 
 super + alt + w
-  brave
+  brave --incognito
 
 super + alt + shift + w
   brave --tor
