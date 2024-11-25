@@ -10,7 +10,7 @@
     allowedSignersFile = ~/.config/git/allowedSSHSigners
 
 # multiuser
-[includeIf "hasconfig:remote.*.url:git@codeberg.com:*/**"]
+[includeIf "hasconfig:remote.*.url:git@codeberg.org:*/**"]
     path = ~/.config/git/codeberg.config
 [includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
     path = ~/.config/git/github.config
