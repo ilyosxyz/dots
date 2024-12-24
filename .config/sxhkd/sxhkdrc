@@ -20,7 +20,7 @@ super + alt + shift + w
   brave --tor
 
 super + {_,shift + }e
-  {$TERMINAL -e lf,pcmanfm}
+  {$TERMINAL -e lfub,pcmanfm}
 
 # reload sxhkd configs
 super + Escape
