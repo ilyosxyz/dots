@@ -87,6 +87,9 @@ vim.keymap.set("n", "N", "Nzz")
 vim.keymap.set("n", "<leader>wv", ":vsplit<cr>")
 vim.keymap.set("n", "<leader>wh", ":split<cr>")
 
+-- save
+vim.keymap.set({"n", "i"}, "<C-s>", "<cmd>w<cr>")
+
 -- windows-1251 encoding for russian characters
 vim.keymap.set("n", "<F8>", ":e ++enc=cp1251<CR>")
 
