@@ -1,5 +1,7 @@
 # My ArchLinux+bspwm configurations and scripts
 
+*New repo for Hyprland configs is [here](https://codeberg.org/khurozov/dotfiles)*
+
 ## Configurations
 
 + bspwm
